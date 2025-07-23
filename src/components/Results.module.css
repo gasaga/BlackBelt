@@ -1,0 +1,76 @@
+
+.resultsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 360px; /* Mismo ancho que en otros componentes */
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 16px; /* Mismo padding que en Quiz */
+  text-align: center;
+}
+
+.title {
+  color: var(--texto-color); /* Usa tus variables CSS */
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.beltTitle {
+    color: var(--terciario-color-gris1);
+    font-family: Roboto;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 100% */
+  margin: 8px 0 24px;
+  text-transform: capitalize;
+}
+
+.scoreContainer {
+  background: var(--fondo-secundario);
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.scoreText {
+  font-size: 1.1rem;
+  margin: 8px 0;
+  color: var(--texto-color);
+}
+
+.highlight {
+  font-weight: 700;
+  color: var(--acento-color);
+}
+
+.button {
+  width: 100%;
+  max-width: 200px;
+  padding: 14px;
+  background: var(--btn-primario);
+  color: var(--primario-color);
+  border: 1px solid var(--primario-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 16px;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Efecto para porcentaje según puntuación */
+.goodScore { color: #4CAF50; } /* >80% */
+.mediumScore { color: #FFC107; } /* 50-80% */
+.lowScore { color: #F44336; } /* <50% */

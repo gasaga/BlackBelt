@@ -1,0 +1,97 @@
+/* 
+ESTILOS GLOBALES PARA LA APLICACIÓN
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Skranji:wght@400;700&display=swap');
+
+:root {
+    --primario-color: #0A0A0A;
+    /* Negro */
+    --secundario-color: #f6f6f6;
+    /* Blanco */
+    --terciario-color-gris1: #454545;
+    /* Gris 1 */
+    --terciario-color-gris2: #888888;
+    /* Gris 2 */
+    --terciario-color-gris3: #d1d1d1;
+    /* Gris 3 */
+
+    --complementario-blanco: #f5f5f5;
+    /* cinturon blanco */
+    --complementario-amarillo: #ffd700;
+    /* cinturon amarillo */
+    --complementario-naranja: #ffa500;
+    /* cinturon naranja */
+    --complementario-verde: #2e8b57;
+    /* cinturon verde */
+    --complementario-azul: #4682b4;
+    /* cinturon azul */
+    --complementario-rojo: #b22222;
+    /* cinturon rojo */
+    --complementario-negro: #0a0a0a;
+    /* cinturon negro */
+    --imagen-cinturon: url(../assets/images/recursos/Vector.svg)
+}
+
+h1 {
+    font-family: "Skranji", system-ui;
+    font-style: normal;
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 24px;
+    font-family: "Skranji", system-ui;
+    font-style: normal;
+}
+
+h3 {
+    font-family: "Roboto", Black;
+    font-size: 20px;
+    color: var(--terciario-color-gris1);
+
+}
+
+p {
+    font-family: "Roboto", Medium;
+    font-size: 20px;
+
+}
+
+.btn-primario {
+    border-radius: 6px;
+    border: 1px solid var(--primario-color);
+    display: inline-flex;
+    padding: 8px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1rem;
+    transition: all 0.3s;
+}
+
+.btn-primario:hover {
+
+    display: inline-flex;
+    padding: 8px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    background: var(--primario-color);
+    /* Shadow S */
+    box-shadow: 0px 0px 10px 0px rgba(24, 24, 24, 0.15);
+    color: var(--secundario-color);
+    transform: translateY(-2px);
+}
+
+.btn-primario:disabled {
+    display: inline-flex;
+    padding: 8px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--terciario-color-gris3);
+    cursor: not-allowed;
+}

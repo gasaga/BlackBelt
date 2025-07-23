@@ -1,0 +1,172 @@
+/* src/components/Quiz/Quiz.module.css */
+.quizContainer {
+  display: flex;
+  width: 360px;
+  min-height: 708px;
+  padding: 20px 16px 24px 16px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  margin: 0 auto;
+  max-height: 100vh;
+  /* Máximo el alto de la pantalla */
+  height: 100%;
+  /* Ocupa el 100% del espacio disponible */
+  position: relative;
+
+
+
+}
+
+.questionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  /* Ocupa todo el ancho disponible */
+  text-align: center;
+  /* Centra el texto */
+  flex: 1;
+  padding: 8px 0;
+  /* Pequeño padding para el área de scroll */
+  
+
+}
+
+.techniqueImage {
+  width: 180px;
+  aspect-ratio: 4/5;
+  object-fit: contain;
+
+}
+
+.questionText {
+  margin-bottom: 16px;
+  
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  /* Ocupa todo el ancho disponible */
+  margin-top: auto;
+  /* Empuja hacia abajo */
+  flex-shrink: 0; /* Evita que se encoja */
+
+}
+
+.optionButton {
+padding: 8px 24px;
+  border: 1px solid var(--primario-color);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s;
+    font-size: 16px;
+    font-style: normal;
+font-weight: 500;
+line-height: normal;
+border-radius: 6px;
+gap: 10px;
+font-family: Roboto;
+
+
+}
+
+.optionButton:hover:not(:disabled) {
+  background: #f5f5f5;
+}
+
+.optionButton.correct {
+  background: var(--complementario-verde);
+  color: white;
+  border-color: var(--complementario-verde);
+}
+
+.optionButton.incorrect {
+  background: var(--complementario-rojo);
+  color: white;
+  border-color: var(--complementario-rojo);
+}
+
+.optionButton.showCorrect {
+  background: var(--complementario-verde);
+  color: white;
+  border-color: var(--complementario-verde);
+  animation: pulse 1s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.feedbackContainer {
+  max-height: 250px;
+  /* Altura máxima para el feedback */
+  /* Scroll interno si el contenido es largo */
+  width: 100%;
+}
+
+.feedbackCorrect {
+  color: var(--complementario-verde);
+  font-weight: bold;
+}
+
+.feedbackIncorrect {
+  color: var(--complementario-rojo);
+  font-weight: bold;
+}
+
+.explanation {
+  color: #666;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.navigationContainer {
+  display: flex;
+  justify-content: center;
+   margin-top: auto; /* Empuja el contenedor hacia abajo */
+  padding-bottom: 24px; /* Margen inferior */
+  width: 100%;
+}
+
+.nextButton {
+  margin-top: 16px; /* Se pega al fondo */
+  width: 100%;
+  padding: 12px;
+  color: var(--primario-color);
+border-radius: 6px;
+  border: 1px solid var(--primario-color);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-family: Roboto;
+  background: var(--secundario-color);
+
+}
+
+.nextButton:hover:not(:disabled) {
+  background: var(--primario-color);
+  color: var(--secundario-color);
+}
+
+.nextButton:disabled {
+  cursor: not-allowed;
+  color: var(--primario-color);
+}
+
