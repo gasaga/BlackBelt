@@ -74,3 +74,30 @@ line-height: 20px; /* 100% */
 .goodScore { color: #4CAF50; } /* >80% */
 .mediumScore { color: #FFC107; } /* 50-80% */
 .lowScore { color: #F44336; } /* <50% */
+
+.perfectScore {
+  color: #4CAF50;
+  font-weight: 700;
+  animation: pulse 0.5s 3;
+}
+
+.failScore {
+  color: #F44336;
+  font-weight: 700;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.scoreContainer.perfect {
+  border: 2px solid #4CAF50;
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.scoreContainer.fail {
+  border: 2px solid #F44336;
+  background-color: rgba(244, 67, 54, 0.1);
+}

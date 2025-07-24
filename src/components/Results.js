@@ -36,7 +36,12 @@ const Results = () => {
 
         <p className={styles.scoreText}>
           Aciertos: <strong>{score}/{totalQuestions}</strong></p>
-        <p className={styles.scoreText}>Porcentaje: <strong>{percentage}%</strong></p>
+        <p className={styles.scoreText}>Porcentaje: <strong>{percentage}%</strong></p>{score === totalQuestions && (
+          <p className={styles.perfectScore}>¡Perfecto! Dominas este cinturón 🥋</p>
+        )}
+        {score === 0 && (
+          <p className={styles.failScore}>¡Sigue practicando! 💪</p>
+        )}
       </div>
 
       <button
