@@ -1,9 +1,16 @@
-// Results.js con clases CSS
+/*
+  Vemos la pantalla de resultados del quiz.js
+  en esta pantalla nos muestra el valor de preguntas acertadas y el % de acertadas
+  ademas sale un mensaje si hacemos puntuacion perfecta, o si fallamos todas.
+  -------> Quiz ------> Results
+*/
+
+// src/Results.js
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import styles from './Results.module.css'; // Importa el CSS Module
+import styles from './Results.module.css'; // Importa el CSS Module de resultados
 
-// Objeto con nombres formateados de cinturones
+// Objeto con nombres formateados de cinturones para poder iniciar el array
 const beltNames = {
   blanco: 'Blanco',
   amarillo: 'Amarillo',
@@ -16,17 +23,20 @@ const beltNames = {
 
 
 const Results = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Extracción con valores por defecto robustos
-  const state = location.state || {};
+  const navigate = useNavigate(); 
+  const location = useLocation(); 
+  const state = location.state || {}; 
   const score = state.score || 0;
   const totalQuestions = Math.max(state.totalQuestions || 1, 1); // Evita división por 0
-  const belt = state.belt || 'blanco';
+  const belt = state.belt || 'blanco'; // ver el estado del cinturon empezando con el blanco
+  const percentage = Math.round((score / totalQuestions) * 100); // percentaje de preguntas acertadas
 
-  const percentage = Math.round((score / totalQuestions) * 100);
-
+  //Render de la pagina
+  // H2 -> CUESTIONARIO FINALIZADO
+  // H3 -> CINTURON (COLOR)
+  // P -> ACIERTOS, PORCENTAJE
+  // BTN -> BOTON DE VOLVER
+  
   return (
     <div className={styles.resultsContainer}>
       <h2>¡CUESTIONARIO COMPLETADO!</h2>

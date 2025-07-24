@@ -7,7 +7,7 @@ import rojo from './rojo'; // Asegúrate de que este archivo exista y tenga las 
 import azul from './azul'; // Asegúrate de que este archivo exista y tenga las preguntas del cinturón azul
 
 // 1. Definimos el orden de los cinturones
-const beltOrder = ['blanco','amarillo', 'naranja', 'verde', 'azul', 'rojo'];
+const beltOrder = ['blanco', 'amarillo', 'naranja', 'verde', 'azul', 'rojo'];
 
 // 2. Mapeamos los arrays de preguntas en el mismo orden
 const beltArrays = {
