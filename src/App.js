@@ -5,11 +5,14 @@ import BeltSelector from './components/BeltSelector';
 import Quiz from './components/Quiz';
 import Results from './components/Results';
 import questions from './data/questions'; // Ruta corregida
+import Login from './components/Login'; // Importa el componente Login
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<Login />} />
+
         <Route path="/" element={<BeltSelector />} />
         <Route
           path="/quiz/:beltId"
