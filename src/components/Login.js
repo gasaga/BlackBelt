@@ -32,7 +32,7 @@ const Login = () => {
     
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
+      navigate('/BeltSelector');
     } catch (error) {
       console.error("Error:", error.message);
       alert("Error de autenticación: " + error.message);

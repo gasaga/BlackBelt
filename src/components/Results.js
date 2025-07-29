@@ -56,7 +56,7 @@ const Results = () => {
 
       <button
         className={styles.button}
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/BeltSelector')}
       >
         Volver a cinturones
       </button>

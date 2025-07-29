@@ -1,8 +1,8 @@
 .loginContainer {
   max-width: 360px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  padding-top: 2rem;
 }
 
 .inputGroup {
@@ -18,24 +18,27 @@
 
 .inputGroup input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
 }
 
 .loginButton {
-  width: 100%;
+  width: 100% ;
   padding: 12px;
-  background-color: #2196F3; /* Azul */
-  color: white;
-  border: none;
+  margin-top: 12px;
+  background-color: var(--secundario-color);
+  color: var(--primario-color);
+   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.3s;
+  justify-content: center;
 }
 
 .loginButton:hover {
-  background-color: #0b7dda;
+  background-color: var(--primario-color);
+  color: var(--secundario-color);
 }
