@@ -26,9 +26,17 @@ const provider = new GoogleAuthProvider();
 // Google Sign-In function
 const signInWithGoogle = async () => {
   try {
-    const result = await signInWithPopup(auth, provider);
-    // You can access user info with result.user
-    return result;
+    // Simple mobile detection
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      await signInWithRedirect(auth, provider);
+      // On mobile, result is handled after redirect
+      return null;
+    } else {
+      const result = await signInWithPopup(auth, provider);
+      // You can access user info with result.user
+      return result;
+    }
   } catch (error) {
     throw error;
   }
