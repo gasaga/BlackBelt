@@ -1,9 +1,10 @@
 // src/components/Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, signInWithGoogle } from "../firebase";
+import { getRedirectResult } from "firebase/auth";
 
 
 
@@ -12,6 +13,21 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  // Handle Google redirect result (for mobile)
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result && result.user) {
+          navigate('/BeltSelector');
+        }
+      })
+      .catch((error) => {
+        if (error && error.message) {
+          console.error("Google Redirect Auth Error:", error.message);
+        }
+      });
+  }, [navigate]);
 
   // Google login handler (now inside component)
   const handleGoogleLogin = async () => {
