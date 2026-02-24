@@ -18,14 +18,13 @@ const Login = () => {
   useEffect(() => {
     getRedirectResult(auth)
       .then((result) => {
+        console.log('getRedirectResult result:', result);
         if (result && result.user) {
           navigate('/BeltSelector');
         }
       })
       .catch((error) => {
-        if (error && error.message) {
-          console.error("Google Redirect Auth Error:", error.message);
-        }
+        console.error('getRedirectResult error:', error);
       });
   }, [navigate]);
 
