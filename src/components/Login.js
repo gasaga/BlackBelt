@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, signInWithGoogle } from "../firebase";
-import { getRedirectResult } from "firebase/auth";
+import { getRedirectResult, onAuthStateChanged } from "firebase/auth";
 
 
 
@@ -14,6 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
   // Handle Google redirect result (for mobile)
   useEffect(() => {
     getRedirectResult(auth)
@@ -26,6 +27,15 @@ const Login = () => {
       .catch((error) => {
         console.error('getRedirectResult error:', error);
       });
+    // Also check if user is already authenticated
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate('/BeltSelector');
+      } else {
+        setLoading(false);
+      }
+    });
+    return () => unsubscribe();
   }, [navigate]);
 
   // Google login handler (now inside component)
@@ -67,6 +77,9 @@ const Login = () => {
 
   
 
+  if (loading) {
+    return <div className={styles.loginContainer}>Cargando...</div>;
+  }
   return (
     <div className={styles.loginContainer}>
       <h2>Iniciar sesión</h2>
