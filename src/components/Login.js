@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, signInWithGoogle } from "../firebase";
 
 
 
@@ -12,6 +12,17 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  // Google login handler (now inside component)
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithGoogle();
+      navigate('/BeltSelector');
+    } catch (error) {
+      console.error("Google Auth Error:", error.message);
+      alert("Error de autenticación con Google: " + error.message);
+    }
+  };
 
  const validateForm = () => {
   if (!email.includes('@')) {
@@ -67,6 +78,14 @@ const Login = () => {
         </div>
         <button type="submit" className={styles.loginButton}>
           Ingresar
+        </button>
+        <button
+          type="button"
+          className={styles.loginButton}
+          style={{ background: '#4285F4', color: 'white', marginTop: '10px' }}
+          onClick={handleGoogleLogin}
+        >
+          Ingresar con Google
         </button>
       </form>
     </div>
