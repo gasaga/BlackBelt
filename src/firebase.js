@@ -1,6 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { 
+  getAuth, 
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  signOut 
+} from "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,27 +27,33 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-// Google Auth Provider
-const provider = new GoogleAuthProvider();
+// Detectar si es móvil
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-// Google Sign-In function
+// Función unificada para login con Google
 const signInWithGoogle = async () => {
   try {
-    // Simple mobile detection
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (isMobile) {
-      await signInWithRedirect(auth, provider);
-      // On mobile, result is handled after redirect
-      return null;
+      // En móvil usar redirect
+      await signInWithRedirect(auth, googleProvider);
+      // No navegues aquí, el redirect manejará la vuelta
     } else {
-      const result = await signInWithPopup(auth, provider);
-      // You can access user info with result.user
+      // En desktop usar popup
+      const result = await signInWithPopup(auth, googleProvider);
       return result;
     }
   } catch (error) {
+    console.error("Error en signInWithGoogle:", error);
     throw error;
   }
 };
 
-export { auth, signInWithGoogle }; // Exporta auth y Google login
+export { 
+  auth, 
+  googleProvider, 
+  signInWithGoogle,
+  getRedirectResult,
+  signOut 
+};

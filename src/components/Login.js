@@ -13,58 +13,70 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(true);
-  // Handle Google redirect result (for mobile)
+
+  // Manejar redirect (para móvil)
   useEffect(() => {
-    getRedirectResult(auth)
-      .then((result) => {
-        console.log('getRedirectResult result:', result);
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
         if (result && result.user) {
+          console.log("Redirect login exitoso:", result.user.email);
           navigate('/BeltSelector');
         }
-      })
-      .catch((error) => {
-        console.error('getRedirectResult error:', error);
-      });
-    // Also check if user is already authenticated
+      } catch (error) {
+        console.error("Error en redirect result:", error);
+      }
+    };
+
+    handleRedirectResult();
+
+    // Verificar si ya hay sesión activa
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log("Usuario ya autenticado:", user.email);
         navigate('/BeltSelector');
       } else {
         setLoading(false);
       }
     });
+
     return () => unsubscribe();
   }, [navigate]);
 
-  // Google login handler (now inside component)
   const handleGoogleLogin = async () => {
     try {
+      // En móvil, esto hará redirect y no llegará a la siguiente línea
+      // En desktop, esperará el resultado del popup
       await signInWithGoogle();
-      navigate('/BeltSelector');
+      
+      // Solo para desktop (popup) navegamos aquí
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (!isMobile) {
+        navigate('/BeltSelector');
+      }
+      // En móvil, la navegación ocurre después del redirect
     } catch (error) {
-      console.error("Google Auth Error:", error.message);
+      console.error("Google Auth Error:", error);
       alert("Error de autenticación con Google: " + error.message);
     }
   };
 
- const validateForm = () => {
-  if (!email.includes('@')) {
-    alert('Email no válido');
-    return false;
-  }
-  if (password.length < 6) {
-    alert('La contraseña debe tener al menos 6 caracteres');
-    return false;
-  }
-  return true;
-};
+  const validateForm = () => {
+    if (!email.includes('@')) {
+      alert('Email no válido');
+      return false;
+    }
+    if (password.length < 6) {
+      alert('La contraseña debe tener al menos 6 caracteres');
+      return false;
+    }
+    return true;
+  };
 
-// Modifica handleSubmit:
- const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-   if (!validateForm()) return; // Usa la función o elimínala
+    if (!validateForm()) return;
     
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -75,11 +87,10 @@ const Login = () => {
     }
   };
 
-  
-
   if (loading) {
     return <div className={styles.loginContainer}>Cargando...</div>;
   }
+
   return (
     <div className={styles.loginContainer}>
       <h2>Iniciar sesión</h2>
