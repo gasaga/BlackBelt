@@ -15,6 +15,22 @@ const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
+  // Browser / in-app browser detection helpers
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  const isGoogleSearchApp = () => /GSA|Google.*App/i.test(navigator.userAgent);
+  const isBraveBrowser = () => /Brave/i.test(navigator.userAgent);
+
+  // general in‑app/unsupported browser detection; add more patterns if needed
+  const isUnsupportedBrowser = () => {
+    const ua = navigator.userAgent;
+    return (
+      isGoogleSearchApp() ||
+      /FBAN|FBAV|Instagram|LinkedIn|Twitter|Snapchat|Pinterest/i.test(ua) ||
+      isBraveBrowser()
+    );
+  };
+
   // Manejar redirect (para móvil)
   useEffect(() => {
     const handleRedirectResult = async () => {
@@ -45,17 +61,27 @@ const Login = () => {
   }, [navigate]);
 
   const handleGoogleLogin = async () => {
+    // warn if we detect an unsupported/in-app browser
+    if (isMobile && isUnsupportedBrowser()) {
+      alert(
+        "Este navegador integrado/privado no permite completar el inicio de sesión con Google. " +
+          "Abre este sitio en un navegador normal (Chrome, Safari, Firefox) o desactiva el bloqueador de cookies/privacidad."
+      );
+      // opcional: forzar apertura en nueva pestaña
+      window.open(window.location.href, "_blank");
+      return;
+    }
+
     try {
       // En móvil, esto hará redirect y no llegará a la siguiente línea
       // En desktop, esperará el resultado del popup
       await signInWithGoogle();
       
       // Solo para desktop (popup) navegamos aquí
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (!isMobile) {
         navigate('/BeltSelector');
       }
-      // En móvil, la navegación ocurre después del redirect
+      // En móvil, la navegación ocurre después del redirect (handled in useEffect)
     } catch (error) {
       console.error("Google Auth Error:", error);
       alert("Error de autenticación con Google: " + error.message);
