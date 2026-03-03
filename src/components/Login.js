@@ -17,42 +17,32 @@ const Login = () => {
 
   // Manejar redirect (para móvil)
   useEffect(() => {
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result && result.user) {
-          console.log("Redirect login exitoso:", result.user.email);
-          navigate('/BeltSelector');
-        }
-        // 2. Si no hay resultado de redirección, verificamos si ya hay sesión activa
-      onAuthStateChanged(auth, (user) => {
+  const initAuth = async () => {
+    try {
+      // 1. Verificamos si venimos de una redirección de Google
+      const result = await getRedirectResult(auth);
+      if (result?.user) {
+        navigate('/BeltSelector');
+        return; // Salimos para evitar doble ejecución
+      }
+
+      // 2. Si no es redirección, escuchamos el cambio de estado normal
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
           navigate('/BeltSelector');
         }
-        setLoading(false); // Quitamos el estado de carga solo después de verificar
+        setLoading(false);
       });
 
-      } catch (error) {
-        console.error("Error en redirect result:", error);
-        setLoading(false);
-      }
-    };
-    
+      return () => unsubscribe();
+    } catch (error) {
+      console.error("Error en Auth:", error);
+      setLoading(false);
+    }
+  };
 
-    handleRedirectResult();
-
-    // Verificar si ya hay sesión activa
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("Usuario ya autenticado:", user.email);
-        navigate('/BeltSelector');
-      } else {
-        setLoading(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [navigate]);
+  initAuth();
+}, [navigate]);
 
   const handleGoogleLogin = async () => {
     try {
