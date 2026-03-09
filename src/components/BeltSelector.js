@@ -20,7 +20,7 @@ import styles from './BeltSelector.module.css'; // Import del CSS Module
 const BeltSelector = () => {
   const navigate = useNavigate();
   const [selectedBelt, setSelectedBelt] = useState(null); // Estado para el cinturón seleccionado
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Controlamos el botón
+  //const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Controlamos el botón
 
   // Lista de cinturones con colores y nombres
   // Puedes añadir más cinturones si es necesario
@@ -28,21 +28,20 @@ const BeltSelector = () => {
   // Asegúrate de que los nombres coincidan con los usados en el quiz
 
   const belts = [
-    { id: 'blanco', color: 'var(--complementario-blanco)' },
-    { id: 'amarillo', color: 'var(--complementario-amarillo)' },
-    { id: 'naranja', color: 'var(--complementario-naranja)' },
-    { id: 'verde', color: 'var(--complementario-verde)' },
-    { id: 'azul', color: 'var(--complementario-azul)' },
-    { id: 'rojo', color: 'var(--complementario-rojo)' },
-
-  ];
+  { id: 'blanco', name: 'Blanco', color: 'var(--complementario-blanco)' },
+  { id: 'amarillo', name: 'Amarillo', color: 'var(--complementario-amarillo)' },
+  { id: 'naranja', name: 'Naranja', color: 'var(--complementario-naranja)' },
+  { id: 'verde', name: 'Verde', color: 'var(--complementario-verde)' },
+  { id: 'azul', name: 'Azul', color: 'var(--complementario-azul)' },
+  { id: 'rojo', name: 'Rojo', color: 'var(--complementario-rojo)' },
+];
 
   // Función para manejar la selección del cinturón
   // Esta función actualiza el estado del cinturón seleccionado y habilita el botón
 
   const handleBeltSelect = (beltId) => {
     setSelectedBelt(beltId); // Actualiza el cinturón seleccionado
-    setIsButtonDisabled(false); // ¡Aquí activamos el botón!
+    //setIsButtonDisabled(false); // ¡Aquí activamos el botón!
   };
 
   // Función para iniciar el quiz
@@ -54,34 +53,50 @@ const BeltSelector = () => {
     }
   };
 
+  // Encontrar el objeto del cinturón seleccionado para sacar su color
+  const activeBeltData = belts.find(b => b.id === selectedBelt);
+
   // Renderiza el selector de cinturones y el botón
   // El botón está deshabilitado hasta que se seleccione un cinturón
   // Los cinturones se muestran como círculos con el color correspondiente
 
 
    return (
-    <div className={styles.container}>
-      <h1>Selecciona tu cinturón</h1> 
-      <div className={styles.grid}>
+    <div 
+      className={styles.container} 
+      style={{ backgroundColor: activeBeltData ? activeBeltData.color : 'var(--secundario-color)' }}
+    >
+      <h1 className={selectedBelt ? styles.titleSelected : styles.titleInitial}>
+  {selectedBelt 
+    ? `Cinturón ${activeBeltData?.name || ''}` 
+    : 'Selecciona tu cinturón'}
+</h1>
+
+      {/* Círculo Grande Central: Aparece con animación cuando seleccionas */}
+      {selectedBelt && (
+        <div className={styles.mainDisplay}>
+          <div 
+            className={styles.bigCircle}
+            style={{ '--belt-color': activeBeltData.color }}
+          ></div>
+          <button onClick={startQuiz} className="btn-primario">
+            Comenzar Quiz
+          </button>
+        </div>
+      )}
+
+      {/* Contenedor de cinturones: Cambia de Grid a Row dinámicamente */}
+      <div className={selectedBelt ? styles.beltRowBottom : styles.beltGridInitial}>
         {belts.map((belt) => (
           <div
             key={belt.id}
             onClick={() => handleBeltSelect(belt.id)}
-            className={`${styles.beltCircle} ${selectedBelt === belt.id ? styles.selected : ''}`}
+            className={`${styles.beltCircle} ${selectedBelt === belt.id ? styles.activeSmall : ''}`}
             style={{ '--belt-color': belt.color }}
           >
-            {belt.name}
           </div>
         ))}
       </div>
-
-       <button
-        onClick={startQuiz}
-        className={`btn-primario ${styles.startButton}`}
-        disabled={isButtonDisabled} // Controlado por estado
-      >
-        Siguiente
-      </button>
     </div>
   );
 };
