@@ -122,7 +122,7 @@ const Login = () => {
         <button
           type="button"
           className={styles.loginButton}
-          style={{ background: '#4285F4', color: 'white', marginTop: '10px' }}
+          style={{ background: '#162030', color: 'white', marginTop: '10px' }}
           onClick={handleGoogleLogin}
         >
           Ingresar con Google
