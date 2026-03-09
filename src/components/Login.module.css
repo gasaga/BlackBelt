@@ -42,3 +42,16 @@
   background-color: var(--primario-color);
   color: var(--secundario-color);
 }
+
+.linkText {
+  margin-top: 1.5rem;
+  color: var(--terciario-color-gris1);
+  font-size: 0.9rem;
+}
+
+.linkAction {
+  color: var(--primario-color);
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}

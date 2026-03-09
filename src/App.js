@@ -6,7 +6,8 @@ import Quiz from './components/Quiz'; // importar el componente Quiz
 import Results from './components/Results'; // importar el componente Results
 import questions from './data/questions'; // Ruta corregida
 import Login from './components/Login'; // Importa el componente Login
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute'; // Importa el componente PrivateRoute
+import Register from './components/Register'; // Importa el componente Register
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
     <Router>
       <Routes>
               <Route path="/" element={<Navigate to="/login" replace />} />
-
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} /> {/* Nueva ruta para Login */}
         <Route path="/BeltSelector" element={<PrivateRoute><BeltSelector/></PrivateRoute>} /> {/* Ruta para el selector de cinturones */}
         <Route path="/quiz/:beltId" element={<Quiz questions={questions} />} />  {/* Ruta para el quiz */}

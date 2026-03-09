@@ -1,6 +1,6 @@
 // src/components/Login.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, signInWithGoogle } from "../firebase";
@@ -128,6 +128,13 @@ const Login = () => {
           Ingresar con Google
         </button>
       </form>
+      <p className={styles.linkText}>
+        ¿No tienes una cuenta?{' '}
+        <Link to="/register" className={styles.linkAction}>
+          Regístrate aquí
+        </Link>
+      </p>
+
     </div>
   );
 };

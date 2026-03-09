@@ -1,7 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { 
-  getAuth, 
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, 
   GoogleAuthProvider,
   signInWithPopup,
   signInWithRedirect,
@@ -55,5 +57,7 @@ export {
   googleProvider, 
   signInWithGoogle,
   getRedirectResult,
-  signOut 
+  signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword 
 };
