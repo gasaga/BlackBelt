@@ -1,14 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { 
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, 
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-  getRedirectResult,
-  signOut 
+  getAuth, 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword 
 } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -16,6 +13,7 @@ import {
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: "AIzaSyDvMv6rkLoCpdrrr2PQ1Yr67riR8nGVn34",
   authDomain: "blackbelt-9520.firebaseapp.com",
@@ -29,35 +27,17 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+// Función para iniciar sesión con Google
+// Configuramos el proveedor de Google
 const googleProvider = new GoogleAuthProvider();
-
-// Detectar si es móvil
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-// Función unificada para login con Google
-const signInWithGoogle = async () => {
-  try {
-    if (isMobile) {
-      // En móvil usar redirect
-      await signInWithRedirect(auth, googleProvider);
-      // No navegues aquí, el redirect manejará la vuelta
-    } else {
-      // En desktop usar popup
-      const result = await signInWithPopup(auth, googleProvider);
-      return result;
-    }
-  } catch (error) {
-    console.error("Error en signInWithGoogle:", error);
-    throw error;
-  }
-};
+// Opcional: Esto obliga a Google a pedir siempre la cuenta (útil para pruebas)
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 export { 
   auth, 
   googleProvider, 
-  signInWithGoogle,
-  getRedirectResult,
-  signOut,
-  createUserWithEmailAndPassword,
+  signInWithPopup, 
+  createUserWithEmailAndPassword, 
   signInWithEmailAndPassword 
 };
