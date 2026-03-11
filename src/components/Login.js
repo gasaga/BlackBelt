@@ -1,48 +1,70 @@
 // src/components/Login.js
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { auth, googleProvider, signInWithPopup } from "../firebase";
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { auth, googleProvider, signInWithPopup, signInWithEmailAndPassword } from "../firebase";
 import styles from './Login.module.css';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  // Login con Email y Password
+  const handleEmailLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/BeltSelector');
+    } catch (error) {
+      alert("Error al iniciar sesión: " + error.message);
+    }
+  };
+
+  // Login con Google (El que ya te funciona)
   const handleGoogleLogin = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      
-      // Si llegamos aquí, el login fue exitoso
-      const user = result.user;
-      console.log("Usuario logueado:", user.displayName);
-      
-      // Redirigimos al selector de cinturones
-      navigate('/BeltSelector'); 
+      await signInWithPopup(auth, googleProvider);
+      navigate('/BeltSelector');
     } catch (error) {
-      console.error("Error en Google Login:", error.code);
-      
-      // Manejo de errores comunes
-      if (error.code === 'auth/popup-closed-by-user') {
-        alert("Cerraste la ventana antes de terminar el login.");
-      } else if (error.code === 'auth/cancelled-popup-request') {
-        console.log("Solicitud cancelada por el navegador.");
-      } else {
-        alert("Ocurrió un error al entrar con Google: " + error.message);
-      }
+      console.error("Error en Google Login:", error.message);
     }
   };
 
   return (
     <div className={styles.loginContainer}>
-      {/* ... resto de tu formulario de email/password ... */}
+      <h2>Iniciar Sesión</h2>
+      
+      <form onSubmit={handleEmailLogin}>
+        <div className={styles.inputGroup}>
+          <label>Email:</label>
+          <input 
+            type="email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            required 
+          />
+        </div>
+        <div className={styles.inputGroup}>
+          <label>Contraseña:</label>
+          <input 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+          />
+        </div>
+        <button type="submit" className={styles.loginButton}>Entrar</button>
+      </form>
 
-      <button
-        type="button"
-        className={styles.googleButton}
-        onClick={handleGoogleLogin}
-      >
-        <img src="/assets/google-icon.png" alt="" style={{width: '20px', marginRight: '10px'}} />
+      <div className={styles.divider}><span>O</span></div>
+
+      <button type="button" className={styles.googleButton} onClick={handleGoogleLogin}>
         Entrar con Google
       </button>
+
+      <p className={styles.footerText}>
+        ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
+      </p>
     </div>
   );
 };

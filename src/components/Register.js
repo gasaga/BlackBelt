@@ -4,8 +4,8 @@
 
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { auth, createUserWithEmailAndPassword } from "../firebase";
-import styles from './Login.module.css'; // Reutilizamos estilos
+import { auth, createUserWithEmailAndPassword, signOut } from "../firebase";
+import styles from './Login.module.css';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -16,10 +16,12 @@ const Register = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      alert("¡Cuenta creada con éxito!");
-      navigate('/BeltSelector');
+      // Forzamos el cierre de sesión para que no entre directo
+      await signOut(auth);
+      alert("¡Cuenta creada! Por favor, inicia sesión.");
+      navigate('/login');
     } catch (error) {
-      alert("Error al registrar: " + error.message);
+      alert("Error en el registro: " + error.message);
     }
   };
 
@@ -29,19 +31,27 @@ const Register = () => {
       <form onSubmit={handleRegister}>
         <div className={styles.inputGroup}>
           <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input 
+            type="email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            required 
+          />
         </div>
         <div className={styles.inputGroup}>
           <label>Contraseña:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+          />
         </div>
         <button type="submit" className={styles.loginButton}>Registrarse</button>
       </form>
-      <p style={{ marginTop: '20px', fontSize: '14px' }}>
-        ¿Ya tienes una cuenta?{' '}
-        <Link to="/login" style={{ color: 'blue', fontWeight: 'bold', textDecoration: 'none' }}>
-          Inicia sesión
-        </Link>
+
+      <p className={styles.footerText}>
+        ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
       </p>
     </div>
   );

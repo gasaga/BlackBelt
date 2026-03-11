@@ -5,7 +5,8 @@ import {
   GoogleAuthProvider, 
   signInWithPopup, 
   createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword 
+  signInWithEmailAndPassword,
+  signOut 
 } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -39,5 +40,6 @@ export {
   googleProvider, 
   signInWithPopup, 
   createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword 
+  signInWithEmailAndPassword,
+  signOut 
 };
